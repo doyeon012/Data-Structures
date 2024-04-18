@@ -103,7 +103,26 @@ int main()
 
 int isStackPairwiseConsecutive(Stack *s)
 {
-  /* add your code here */
+	//연결리스트의 head 노드를 가져온다.
+	ListNode *current = s->ll.head;
+
+	while (current != NULL && current->next != NULL)
+	{
+		int left = current->item;
+		int right = current->next->item;
+
+		// 연속되지 않는 경우를 검사합니다.
+		if(abs(left - right) != 1)
+		{
+			return 0;
+		}
+
+		//다음 쌍으로 이동 next > next해줘야 함 2개를 비교했기 때문에
+		current = current->next->next;
+
+	}
+	return 1;
+
 }
 
 //////////////////////////////////////////////////////////////////////////////////

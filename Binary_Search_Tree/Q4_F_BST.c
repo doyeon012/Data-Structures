@@ -91,7 +91,51 @@ int main()
 
 void postOrderIterativeS1(BSTNode *root)
 {
-	 /* add your code here */
+	Stack stack;
+	stack.top = NULL;
+	BSTNode *current = root; // 이 값은 함수 밖에 있기 때문에 바뀌지 않는다.
+
+	//처음에 root > 오른쪽 > 왼쪽 순서로 넣어줍니다. 왜? 팝은 왼쪽부터 뽑아내기 때문에
+	push(&stack, current);
+	push(&stack, current->right);
+	push(&stack, current->left);
+
+	//스택에 값이 있을때 계속 돌려
+	while (!isEmpty(&stack))
+	{
+		//스택에 있는 맨 위에 있는 값을 current로 뽑기. 이 값으로 
+		current = pop(&stack);
+
+		if(current == root)
+		{
+			printf("%d ", current->item);
+			break;
+		}
+
+		//현재 pop으로 뽑은 값과 스택에 맨위에 있는 값을 비교해서 같아? 그러면 방문했다는 뜻
+		if (peek(&stack)->item == current->item)
+		{	
+			printf("%d ", current->item);
+			pop(&stack);
+			continue;
+		}
+
+		//자식이 한 개 라도 있을 때
+		if(current->left || current->right)
+		{
+			//방문 유무 확인하기 위해 본인 값 push를 두 번 한다.
+			//그래야 current랑 peek랑 비교해서 같을 때 프린트 하고 방문했었던 거 pop하기
+			push(&stack, current);
+			push(&stack, current);
+			if(current->right) push(&stack, current->right); //오른쪽 있을 때 스택에 push
+			if(current->left) push(&stack, current->left); // 왼쪽 있을 때 스택에 push
+		}
+		else 
+		{
+			printf("%d ", current->item); // 자식이 하나도 없어? 그러면 본인 출력.
+		}
+	}
+	
 }
 
 ///////////////////////////////////////////////////////////////////////////////

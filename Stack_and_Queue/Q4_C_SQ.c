@@ -112,7 +112,26 @@ int main()
 
 void reverse(Queue *q)
 {
-/* add your code here */
+	Stack tempStack;
+	tempStack.ll.head = NULL;
+	tempStack.ll.size = 0;
+	tempStack.ll.tail = NULL;
+
+	//기존에 있던 큐에서 모든 요소를 제거하고 > 임시 스택에 삽입
+	while (!isEmptyQueue(q))// 큐에서 모든 요소가 사라질때까지 while문 돌려!
+	{
+		int item = dequeue(q); // 앞에서 부터 꺼내 
+		push(&tempStack, item); // 앞으로 계속 넣으니 역순으로 스택에 들어감.
+	}
+
+	//임시 스택에서 모든 요소를 제거하면서 다시 큐에 삽입하면 순서가 반전됌.
+	while (!isEmptyStack(&tempStack))
+	{
+		int item = pop(&tempStack); //앞에서 부터 빼 그럼 역순된 상태로 빠지겠지?
+		enqueue(q, item); // 뺀 거 순서대로 끝에 넣어줘.
+	}
+	
+	
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

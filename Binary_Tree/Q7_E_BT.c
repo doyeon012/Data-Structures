@@ -102,10 +102,39 @@ int main()
 
 int smallestValue(BTNode *node)
 {
-	/* add your code here */
+    if (node == NULL)
+    {
+        return 9999;  //임의로 큰 값 생성.
+    }
+
+    //노드의 item 값을 min에 넣어줘.
+    int min = node->item; 
+
+    //왼쪽 노드의 값이 있어?
+    if (node->left != NULL) 
+    {   
+        //재귀타고
+        int leftMin = smallestValue(node->left);  
+        if (leftMin < min) 
+        {
+            min = leftMin;  //min 업데이트
+        }
+    }
+
+    //값이 오른쪽 노드의 값이 있어?
+    if (node->right != NULL) 
+    {   
+        //재귀타고
+        int rightMin = smallestValue(node->right);  
+        if (rightMin < min) 
+        {
+            min = rightMin; //min 업데이트
+        }
+    }
+
+    return min; 
 }
 
-//////////////////////////////////////////////////////////////////////////////////
 
 BTNode *createBTNode(int item)
 {
@@ -115,7 +144,6 @@ BTNode *createBTNode(int item)
     newNode->right = NULL;
     return newNode;
 }
-
 //////////////////////////////////////////////////////////////////////////////////
 
 

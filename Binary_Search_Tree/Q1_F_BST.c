@@ -92,9 +92,40 @@ int main()
 //////////////////////////////////////////////////////////////////////////////////
 
 void levelOrderTraversal(BSTNode* root)
-{
+{	
+	  //root안에 값이 없어? 트리 존재하지 않다. 출력o
+	  if (root == NULL) {
+        printf("The tree is empty\n");
+        return;
+    }
 
-    /* add your code here */
+    // 큐 처음에 head와 tail 초기화.
+    Queue queue;
+    queue.head = queue.tail = NULL;
+
+    // 첫 시작값 인큐로 넣어줘
+    enqueue(&queue.head, &queue.tail, root);
+
+	//큐 안에 값이 없을때까지 돌려
+    while (!isEmpty(queue.head)) {
+       
+        BSTNode* current = dequeue(&queue.head, &queue.tail);
+
+		//디큐로 제일 앞에 있는거 뽑은거 출력o
+        printf("%d ", current->item);
+
+        //왼쪽 자식부터 인큐로 큐에 넣어줘.
+        if (current->left != NULL) {
+            enqueue(&queue.head, &queue.tail, current->left);
+        }
+
+        // 왼쪽 자식 다음에 오른쪽 자식 인큐로 큐에 넣어줘.
+        if (current->right != NULL) {
+            enqueue(&queue.head, &queue.tail, current->right);
+        }
+		// 왜 왼쪽부터 넣어? 디큐로 뽑을때 먼저 넣은값이 뽑히기 때문에 bfs 구조 완성o
+    }
+    
 }
 
 ///////////////////////////////////////////////////////////////////////////////

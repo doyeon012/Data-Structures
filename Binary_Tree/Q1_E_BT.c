@@ -116,7 +116,33 @@ int main()
 int identical(BTNode *tree1, BTNode *tree2)
 
 {
-   /* add your code here */
+    //두개가 둘 다 NULL이야? 그러면 1리턴 즉 동일하다.
+     if(tree1 == NULL && tree2 == NULL)
+    {
+        return 1;
+    }
+
+    // 두 개의 아이템이 달라? 그러면 0리턴 다르다!
+    if(tree1->item != tree2->item)
+        return 0;
+
+    // 하나가 널이라 끝났는데, 다른게 널이 아니야? 그러면 다른 트리니깐
+    if (tree1 == NULL || tree2 == NULL)
+        return 0;
+
+   // 그렇게 2개의 값을 받아서 둘다 1이 리턴이 되어야 아래 조건문에 걸려서 1을 리턴해서 둘이 같다!
+   int a = identical(tree1->left, tree2->left);
+   int b = identical(tree1->right, tree2->right);
+
+   //둘 다 1이 되어야 동일하다는 뜻 그렇기 때문에 1리턴하면 됌.
+   if(a == 1 && b ==1)
+   {
+    return 1;
+   }
+   else
+   {
+     return 0;
+   }
 }
 
 /////////////////////////////////////////////////////////////////////////////////

@@ -96,8 +96,18 @@ int main()
 
 int maxHeight(BTNode *node)
 
-{
-    /* add your code here */
+{  
+   //현재 노드가  NULL이야? > 리프의 하위 노드에 도달했음을 의미하므로 0을 반환
+   if (node == NULL) {
+        return 0;
+    } else {
+        
+        //둘 중에 큰 값이 리턴에 +되서 쌓이기 때문에 몇 번 타고 들어갔어? 최종적으로 count 값이 리턴됌.
+        int leftHeight = maxHeight(node->left); // 왼쪽 자식을 재귀적으로 들어가기. 리턴된 값이 leftHeight여기에 저장이 되니깐! 
+        int rightHeight = maxHeight(node->right);// 오른쪽 자식을 재귀적으로 들어가기. 리턴된 값이 rightHeight 여기에 저장이 되니깐.
+
+        return 1 + (leftHeight > rightHeight ? leftHeight : rightHeight); // 왼쪽이 더 커? 왼쪽 +해서, 오른쪽이 더 커? 오른쪽 리턴된 값 + 해.
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////////

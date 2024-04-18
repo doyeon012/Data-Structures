@@ -100,9 +100,28 @@ int main()
 
 //////////////////////////////////////////////////////////////////////////////////
 
-void frontBackSplitLinkedList(LinkedList *ll, LinkedList *resultFrontList, LinkedList *resultBackList)
+void frontBackSplitLinkedList(LinkedList *ll, LinkedList *resultFrontList, LinkedList *resultBackList) // ll, Front, Back 받아서 사용하려고
 {
-	/* add your code here */
+	ListNode *Node1 = ll->head; // ll의 head
+	int maxcount = ll->size; // ll 리스트의 size를 저정해놈.
+	int count = (ll->size +1) / 2; // 절반으로 나눠
+
+		// 절반 나눈 거 까지 반복문 돌면서
+		for (int i =0; i < count; i++)
+	{
+		// Front에 넣어줌
+		insertNode(resultFrontList, i, Node1->item);
+		Node1 = Node1->next;
+
+	}
+		// 다시 BackList에 i값 0 부터 넣어줘야 하니 언제까지 전체값 - 절반 즉 나머지를 넣어주면 됌 
+		// 즉 Node는 이어지기 때문에 그 뒤에 값부터 들어감.
+		for (int i= 0; i < maxcount-count; i++)
+	{
+			insertNode(resultBackList, i, Node1->item); // 배열, 인덱스, 노드의 아이템(이게 .next로 계속해서 업데이트 됌)
+			Node1 = Node1->next;
+	}
+		
 }
 
 ///////////////////////////////////////////////////////////////////////////////////

@@ -109,7 +109,20 @@ int main()
 
 void recursiveReverse(Queue *q)
 {
-/* add your code here */
+	if(q->ll.head ==NULL) return;
+	//디큐로 지우면은 리턴되는 값이 지워진 item이 리턴되니깐 temp로 저장해두고
+	//인큐 쓸때 넣는다.
+	int temp;
+
+	//디큐는 앞에서 부터 차례대로 빼니 원래 순서 대로 뺐다.
+	temp = dequeue(q);
+
+	// 재귀 쭈욱 타고 들어가자.
+	recursiveReverse(q);
+
+	//재귀 끝나면 역순으로 끝나니 역순으로 차례대로 인큐를 써서 넣는다.
+	enqueue(q, temp);
+
 }
 
 //////////////////////////////////////////////////////////////////

@@ -100,8 +100,39 @@ int main()
 
 int countOneChildNodes(BTNode *node)
 
-{
-    /* add your code here */
+{   
+    // 재귀 타고 들어가다가 NULL 만났을 때 0 리턴. 종료
+    if(node==NULL)
+    {
+        return 0;
+    }
+    int count = 0;
+    
+    //정확히 하나의 자식 노드만 있을 경우 count = 1 증가
+    if(node->left == NULL)
+    {
+        if(node->right != NULL)
+        {
+            count = 1;
+        }
+    }
+     if(node->right == NULL)
+    {
+        if(node->left != NULL)
+        {
+            count  = 1;
+        }
+    }
+
+    // 재귀타고 왼쪽 ~ 오른쪽 쭈욱 들어가.
+    int left = countOneChildNodes(node->left);
+    int right = countOneChildNodes(node->right);
+
+
+    //재귀가 끝나면 아래서 부터 위로쭈욱 올라오니 count 값이 차근차근 쌓인다.
+    // 즉 말 그대로 현재 노드 + 왼쪽 + 오른쪽 자식의 노드의 수
+    // 끝에 NULL을 만나면 리턴 0 이되지만, 아니었을때는 다 계산해서 카운트가 누적으로 쌓일 것.
+    return count + left + right;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////

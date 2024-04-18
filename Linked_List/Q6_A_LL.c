@@ -87,8 +87,55 @@ int main()
 ////////////////////////////////////////////////////////////////////////
 
 int moveMaxToFront(ListNode **ptrHead)
-{
-    /* add your code here */
+{	
+	ListNode *Node1 = *ptrHead;
+
+	ListNode *Node2 = *ptrHead;
+	int max = 0;
+	int idx = 0;
+	int i = 0;
+	ListNode *Maxnode = Node1;
+	ListNode *new =  0;
+
+
+	//max값의 인덱스를 찾는 용도
+	while (Node1 != NULL) // Node가 NULL이라는 뜻은 끝에 까지 도달했다는 뜻
+	{
+		if(max < Node1->item )
+		{
+			max = Node1->item; //max 변수에 max값을 넣고
+			idx = i; // idx에 인덱스를 저장한다.
+		}
+		Node1 = Node1->next; // 다음껄로 바꿔주면서 전체 탐색o
+		i ++;
+	}
+
+	Node1 = *ptrHead; // 그 전에 Node1값을 계속해서 바꿔주면서 썻으니, 다시 처음부터 돌아야 하니깐 헤드값으로 업데이트
+	
+
+	//처음부터 돌면서 idx가 max에 index니깐 그전에꺼에서 멈추게끔
+	for (int j = 0; j <= idx; j++)
+	{	
+		//max 전꺼
+		if(j == idx-1)
+		{
+			new = Node1->next; // max 전의 next니깐 max의 Node의 값 미리 저장해놈
+			Node1->next = Node1->next->next; // 현재의 next는 일반적으로 max인데 max의 위치가 맨 처음으로 이동하기 때문에 next의 next로 그다음꺼 연결o
+			j++; //이거 해주면 자연스래 다음 로직으로 들어감
+		}
+
+		//max 일때
+		if(j==idx)
+		{
+			new->next = Node2; //좀 전에 저장해놓은 new라는 값의 next를 현재 head 값인 즉 깔끔한 Node2의 값으로 연결해줌
+			Maxnode = new; // ll의 head 값을 바꿔주기 위해 
+			break; // 할거 다했으니 끝내.
+		}
+		
+		Node1 = Node1->next; // max전의 값을 찾기 전까지 Node값을 next로 바꿔주면서 탐색o
+	}
+
+	*ptrHead = Maxnode;  //결국 printList에서 헤드부터 도니깐 헤드에 max의 노드를 넣어준다.
 }
 
 //////////////////////////////////////////////////////////////////////////////////

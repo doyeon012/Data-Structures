@@ -85,10 +85,30 @@ int main()
 
 ////////////////////////////////////////////////////////////////////////
 
-void RecursiveReverse(ListNode **ptrHead)
-{
-	/* add your code here */
+void RecursiveReverse(ListNode **ptrHead) {
+  /* add your code here */
+  //재귀 언제 끝내? 넘겨받은 ptrHead값 즉 rest의 값이 NULL 이거나 그거에 next가 NULL일때
+  if (*ptrHead == NULL || (*ptrHead)->next == NULL) return;
+
+  //first랑 rest를 업데이트
+  ListNode *first = *ptrHead;
+  ListNode *rest = first->next;
+
+  //재귀로 넘길때 rest의 주소값을 넘겨서
+  // resst값이 업데이트 될때 기존의 값이 업데이트 됌
+  RecursiveReverse(&rest);
+  
+  //ex) first = 1, rest = 2 일 때 1 > 2 의 next = 1 2가 원래 3을 가리켰는데 1을 가리킴
+  // 그리고, 1은 원래 2를 가리켰는데 1을 가리킴
+  first->next->next = first;
+  first->next = NULL;
+
+  //결국 head값에 rest값을 넣어야 하기 때문에.
+  *ptrHead = rest;
 }
+
+	
+	
 
 //////////////////////////////////////////////////////////////////////////////////
 

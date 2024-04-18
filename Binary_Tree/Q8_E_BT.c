@@ -102,7 +102,56 @@ int main()
 
 int hasGreatGrandchild(BTNode *node)
 {
-	/* add your code here */
+    if (node == NULL) {
+        return 0;
+    }
+
+   
+    int hasGGC = 0;  
+    BTNode *child;
+    BTNode *grandchild;
+
+    //왼쪽 기준으로 보자.
+    if (node->left) {
+        //우선 왼쪽 자식이 child
+        child = node->left;
+
+        //왼쪽 손주가 있고 왼쪽 손주의 왼쪽 증손자 or 왼쪽 손주의 오른쪽 증손자
+        if (child->left && (child->left->left || child->left->right)) {
+            hasGGC = 1;
+        }
+
+        //오른쪽 손주가 있고 오른쪽 손주의 왼쪽 증손자 or 오른쪽 손주의 오른쪽 증손자 
+        if (child->right && (child->right->left || child->right->right)) {
+            hasGGC = 1;
+        }
+    }
+
+    // 오른쪽 기준으로 보자.
+    if (node->right) {
+
+        //우선 오른쪽 자식이 child
+        child = node->right;
+
+        //왼쪽 손주가 있고, 왼쪽 손주의 왼족 증손자 or 왼쪽 손주의 오른쪽 증손자
+        if (child->left && (child->left->left || child->left->right)) {
+            hasGGC = 1;
+        }
+        //오른쪽 손주가 있고, 오른쪽 손주의 왼쪽 증손자 or 오른쪽 손주의 오른쪽 증손자
+        if (child->right && (child->right->left || child->right->right)) {
+            hasGGC = 1;
+        }
+    }
+
+    //결국 1이 반환돼? 즉 증손주가 1개만 있으면 if조건에 의해 1이 반환됌.
+    //그래서 증조 할아버지인 현재 노드를 출력하면 된다.
+    if (hasGGC) {
+        printf("%d            ", node->item);
+    }
+
+    //계속 재귀 타면서 null 만날때까지 재귀 돌아.
+    hasGreatGrandchild(node->left);
+    hasGreatGrandchild(node->right);
 }
 
 //////////////////////////////////////////////////////////////////////////////////

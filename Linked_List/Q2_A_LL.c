@@ -101,9 +101,42 @@ int main()
 
 //////////////////////////////////////////////////////////////////////////////////
 
-void alternateMergeLinkedList(LinkedList *ll1, LinkedList *ll2)
-{
-    /* add your code here */
+void alternateMergeLinkedList(LinkedList *ll1, LinkedList *ll2) {
+	
+	ListNode *Node1 = ll1 -> head;
+	ListNode *Node2 = ll2 -> head;
+	int idx =1;
+	int count = 0;
+
+	// ll1과 ll2중에 더 작은 값이 기준이 되어서 절반으로 나눈다.
+	// ll1이 더 커 그러면 더 작은 ll2의 size 값이 기준이 됌.
+	if(ll1->size >= ll2->size)
+	{
+		count = ll2->size;
+		
+	}
+	else if(ll1->size <= ll2->size)
+	{
+		count = ll1->size;
+	}
+	
+	// count 사라질때까지 돌아
+	while(count){
+		
+		// idx가 홀수 일때
+		if(idx%2==1)
+		{
+
+			//ll1에 idx위치에 Node2의 아이템을 넣고, ll2에서 0번째 인덱스 지워
+			insertNode(ll1, idx, Node2->item);
+			removeNode(ll2, 0);
+			Node2 = ll2 -> head;
+			count --; // 카운트 -1하고 왜? while 문 끝나는 기준이 되니깐
+		}
+		idx++;
+
+	}
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
@@ -179,7 +212,6 @@ int insertNode(LinkedList *ll, int index, int value){
 		ll->size++;
 		return 0;
 	}
-
 
 	// Find the nodes before and at the target position
 	// Create a new node and reconnect the links

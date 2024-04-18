@@ -91,7 +91,31 @@ int main()
 
 void preOrderIterative(BSTNode *root)
 {
-	 /* add your code here */
+	 //전위 순회 문제
+	 Stack stack;
+	 stack.top = NULL;
+	 BSTNode *current = root;
+
+	// 현재 노드가 NULL이 아니거나 스택이 비어있지 않는 동안 반복합니다.
+    while (current != NULL || !isEmpty(&stack)) {
+
+        //왼쪽으로 쭉 이동하면서 스택에 값을 넣는다.
+        while (current != NULL) {
+			//우선 출력한다. dfs 느낌으로 
+			printf("%d ", current->item);
+            push(&stack, current);
+            current = current->left;
+        }
+
+        //스택에서 가장 위에 있는 값 팝하고 
+        current = pop(&stack);
+
+        //그 전에서 왼쪽만 돌았기 때문에 팝한거에 오른쪽 노드로 기준점을 바꿔보자.
+        current = current->right;
+    }
+
+	
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////

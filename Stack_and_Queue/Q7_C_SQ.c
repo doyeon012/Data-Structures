@@ -104,7 +104,65 @@ int main()
 ////////////////////////////////////////////////////////////
 int balanced(char *expression)
 {
-/* add your code here */
+	Stack s;
+	s.ll.head = NULL;
+	s.ll.size = 0;
+
+	char ch;
+	int match;
+
+	//문자열안에 값이 다 떨어졌을 때 종료를 한다.
+	while (*expression != 0)
+	{
+		// 문자열을 임의로 저장
+		ch = *expression;
+
+		//여는 괄호들을 발견했을 때 스택에 넣는다.
+		if (ch == '(' || ch == '[' || ch == '{')
+		{
+			push(&s, ch);// 스택에 문자열을 넣는다. 
+
+		}
+
+		//닫는 괄호들 발견했어? 
+		else if(ch == ')' || ch == ']' || ch == '}')
+		{
+			//스택이 비었어? 그러면 닫는 괄호가 더 많다는 뜻 0을 반환해서 not밸런스
+			if (isEmptyStack(&s))
+			{
+				return 0;
+			}
+			// pop는 pop한 값을 반환하기 때문에
+			match = pop(&s);
+
+			//pop한 값 mach랑 현재의 ch인 여는 괄호랑 같지 않을 때 1을 반환
+			//현재 ch가 닫는괄호일때 else if 타고 여기 들어왔으니, 여는 괄호랑 매칭이 돼?
+			// 안돼면 1 즉 true가 돼서 return 0 반환해
+			//매칭이 돼? 그러면 3개다 not이 돼서 이 if문 통과함
+			if ((ch == ')' && match != '(') ||
+                (ch == ']' && match != '[') ||
+                (ch == '}' && match != '{')) {
+                return 0;
+				}
+
+		}
+		// 문자열 ++해서 그 다음 문자열 조사하게끔
+		expression++;
+	}
+
+	
+	//다 끝났을 때 마지막 검토차원에서 비었어야 정상인데 비지 않았을 때 0을 반환해서 1이 돼서 
+	//스택에 있는 아이템 값 깔끔하게 싹 지우고 0반환
+	if (!isEmptyStack(&s)) {
+        removeAllItemsFromStack(&s);
+        return 0;
+    }
+	
+	//최종 다 관문들 지났을 때 1리턴해서 밸런스!
+    return 1; 
+	
+	
+	
 }
 
 ////////////////////////////////////////////////////////////

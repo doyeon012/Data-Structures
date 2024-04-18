@@ -86,7 +86,41 @@ int main()
 
 void moveOddItemsToBack(LinkedList *ll)
 {
-	/* add your code here */
+
+	ListNode *Node1 = ll->head;
+
+	int count = ll->size;
+	int max_count = ll->size;
+
+
+
+	for(int i =0 ; i < count; i++)
+	{	
+		//아이템이 홀수야?
+		if(Node1->item %2 ==1)
+		{	
+			// ll에 ll의 끝 인덱스에 현재의 아이템 값을 넣어줘
+			insertNode(ll, max_count, Node1->item);
+			// 쉽게 말해 홀수를 끝에 넣어줘 그러고 앞에 있던 홀수 지워주면 되니깐 그 전에 Node1을 next로 미리 옮겨줘
+			Node1 = Node1->next; 
+			//그리고 끝에 넣어줬으니 지워.
+			removeNode(ll, i);
+
+			//카운터 -1해서 for문의 끝값을 줄여줘 무한 for문x 왜냐? 홀수를 해서 뒤로 보냈기 때문에 그 인덱스부터는 검색x
+			count--;
+			//홀수 보냈는데 위에 for문에는 i가 +되는데, 그러면 안된다. 짝수랑 다르게 홀수는 i가 유지돼야함. 그렇기 때문에 -1해줌
+			i--;
+		}
+		
+		else
+		{	
+			// 짝수야? 그러면 그냥 Node1를 그 다음값 탐색해야하니 넘겨줘
+			Node1 = Node1->next;
+		}
+
+
+	}
+	
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
