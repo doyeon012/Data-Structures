@@ -125,7 +125,6 @@ int insertSortedLL(LinkedList *ll, int item)
 					ll ->head = newnode;
 					newnode ->next = cur;
 				}
-
 				//중간 삽입
 				else
 				{

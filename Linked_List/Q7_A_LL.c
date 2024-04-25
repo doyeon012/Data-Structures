@@ -105,6 +105,7 @@ void RecursiveReverse(ListNode **ptrHead) {
 
   //결국 head값에 rest값을 넣어야 하기 때문에.
   *ptrHead = rest;
+  
 }
 
 	

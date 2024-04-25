@@ -13,15 +13,18 @@ Purpose: Implementing the required functions for Question 2 */
 
 typedef struct _listnode
 {
-	int item;
-	struct _listnode *next;
-} ListNode;			// You should not change the definition of ListNode
+	int item; //노드가 저장할 데이터를 나타낸다.
+	struct _listnode *next; // 다음 ListNode를 가리킨다.
+	//이는 링크드리스트의 연결 구조를 만들기 위해 사용되며
+	//다음 노드로의 연결을 의미한다.
+} ListNode;			//ListNode의 정의를 변경하면 안 됩니다.
 
 typedef struct _linkedlist
 {
-	int size;
-	ListNode *head;
-} LinkedList;			// You should not change the definition of LinkedList
+	int size; // 리스트에 현재 저장된 노드의 개수를 나타낸다.
+	ListNode *head; // 리스트의 첫 번째 노드, 즉 헤드 노드를 가리킨다.
+	// 이 포인터를 통해 리스트의 모든 노드에 접근할 수 있다.
+} LinkedList;			// LinkedList의 정의를 변경하면 안 됩니다.
 
 
 //////////////////////// function prototypes /////////////////////////////////////
@@ -115,11 +118,12 @@ void alternateMergeLinkedList(LinkedList *ll1, LinkedList *ll2) {
 		count = ll2->size;
 		
 	}
+
 	else if(ll1->size <= ll2->size)
 	{
 		count = ll1->size;
 	}
-	
+
 	// count 사라질때까지 돌아
 	while(count){
 		
@@ -127,7 +131,7 @@ void alternateMergeLinkedList(LinkedList *ll1, LinkedList *ll2) {
 		if(idx%2==1)
 		{
 
-			//ll1에 idx위치에 Node2의 아이템을 넣고, ll2에서 0번째 인덱스 지워
+			//ll1에 위치에 Node2의 아이템을 넣고, ll2에서 0번째 인덱스 지워
 			insertNode(ll1, idx, Node2->item);
 			removeNode(ll2, 0);
 			Node2 = ll2 -> head;
@@ -203,23 +207,23 @@ int insertNode(LinkedList *ll, int index, int value){
 	if (ll == NULL || index < 0 || index > ll->size + 1)
 		return -1;
 
-	// If empty list or inserting first node, need to update head pointer
+	// 빈 목록이거나 첫 번째 노드를 삽입하는 경우 헤드 포인터를 업데이트해야 합니다.
 	if (ll->head == NULL || index == 0){
 		cur = ll->head;
-		ll->head = malloc(sizeof(ListNode));
+		ll->head = malloc(sizeof(ListNode)); // 새 노드를 동적 할당한다.
 		ll->head->item = value;
-		ll->head->next = cur;
+		ll->head->next = cur; // 새 노드의  다음 노드를 이전의 헤드로 설정한다.
 		ll->size++;
 		return 0;
 	}
 
-	// Find the nodes before and at the target position
-	// Create a new node and reconnect the links
+	// 목표 위치 앞의 노드와 위치의 노드를 찾습니다.
+	// 새 노드를 생성하고 링크를 다시 연결합니다.
 	if ((pre = findNode(ll, index - 1)) != NULL){
 		cur = pre->next;
 		pre->next = malloc(sizeof(ListNode));
-		pre->next->item = value;
-		pre->next->next = cur;
+		pre->next->item = value; // 새 노드의 값 설정
+		pre->next->next = cur; // 새 노드의 다음 노드를 cur로 설정한다.
 		ll->size++;
 		return 0;
 	}
@@ -232,22 +236,23 @@ int removeNode(LinkedList *ll, int index){
 
 	ListNode *pre, *cur;
 
-	// Highest index we can remove is size-1
+	
+	// 제거할 수 있는 가장 높은 인덱스는 크기 1입니다.
 	if (ll == NULL || index < 0 || index >= ll->size)
 		return -1;
 
-	// If removing first node, need to update head pointer
+	// 첫 번째 노드를 제거하는 경우 헤드 포인터를 업데이트해야 합니다.
 	if (index == 0){
 		cur = ll->head->next;
 		free(ll->head);
 		ll->head = cur;
 		ll->size--;
 
-		return 0;
+		return 0;	
 	}
 
-	// Find the nodes before and after the target position
-	// Free the target node and reconnect the links
+	// 목표 위치 전후의 노드를 찾습니다.
+  	// 대상 노드를 해제하고 링크를 다시 연결합니다.
 	if ((pre = findNode(ll, index - 1)) != NULL){
 
 		if (pre->next == NULL)
@@ -262,3 +267,4 @@ int removeNode(LinkedList *ll, int index){
 
 	return -1;
 }
+

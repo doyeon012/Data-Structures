@@ -118,14 +118,11 @@ void removeUntil(Stack *s, int value)
 		{
 			break;
 		}
-		
 		else
 		{
 			pop(s);
 		}
 		s->ll.head = s->ll.head->next;
-
-		
 	}
 
 	

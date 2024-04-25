@@ -118,9 +118,12 @@ void createQueueFromLinkedList(LinkedList *ll, Queue *q)
 {
 	ListNode *temp = ll->head;
 
+	//링크드 리스트의 헤드가 NULL일 때까지
 	while (temp != NULL)
 	{
+		//순차적으로 큐에 아이템을 넣는다.
 		enqueue(q, temp->item);
+		// 넣고 헤드값을 링크드 리스트의 next로 업데이트
 		temp = temp->next;
 	}
 	
@@ -133,6 +136,7 @@ void removeOddValues(Queue *q)
 			return;
 		count = q->ll.size;
 
+		//큐에 사이즈 만큼, 반복문을 돌아서 전부 없앤다.
 		for (i = 0; i < count; i++)
 			dequeue(q);
 
@@ -234,7 +238,7 @@ int insertNode(LinkedList *ll, int index, int value){
 	if (ll == NULL || index < 0 || index > ll->size + 1)
 		return -1;
 
-	// If empty list or inserting first node, need to update head pointer
+	// 빈 목록이거나 첫 번째 노드를 삽입하는 경우 헤드 포인터를 업데이트해야 합니다.
 	if (ll->head == NULL || index == 0){
 		cur = ll->head;
 		ll->head = malloc(sizeof(ListNode));
@@ -249,8 +253,8 @@ int insertNode(LinkedList *ll, int index, int value){
 	}
 
 
-	// Find the nodes before and at the target position
-	// Create a new node and reconnect the links
+	// 목표 위치 앞의 노드와 위치의 노드를 찾습니다.
+	// 새 노드를 생성하고 링크를 다시 연결합니다.
 	if ((pre = findNode(ll, index - 1)) != NULL){
 		cur = pre->next;
 		pre->next = malloc(sizeof(ListNode));
@@ -272,11 +276,11 @@ int removeNode(LinkedList *ll, int index){
 
 	ListNode *pre, *cur;
 
-	// Highest index we can remove is size-1
+	// 제거할 수 있는 가장 높은 인덱스는 크기 1입니다.
 	if (ll == NULL || index < 0 || index >= ll->size)
 		return -1;
 
-	// If removing first node, need to update head pointer
+	// 첫 번째 노드를 제거하는 경우 헤드 포인터를 업데이트해야 합니다.
 	if (index == 0){
 		cur = ll->head->next;
 		free(ll->head);
@@ -285,8 +289,8 @@ int removeNode(LinkedList *ll, int index){
 		return 0;
 	}
 
-	// Find the nodes before and after the target position
-	// Free the target node and reconnect the links
+	// 목표 위치 전후의 노드를 찾습니다.
+	// 대상 노드를 해제하고 링크를 다시 연결합니다.
 	if ((pre = findNode(ll, index - 1)) != NULL){
 
 		if (pre->next == NULL)
